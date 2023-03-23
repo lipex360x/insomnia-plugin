@@ -1,1 +1,1 @@
-export const bufferToJson = (buf:Buffer) => JSON.parse(buf.toString('utf-8'));
+export const bufferToJson = (buf: Buffer) => JSON.parse(buf.toString('utf-8'))
