@@ -9,16 +9,30 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.responseHooks = exports.requestHooks = void 0;
+exports.templateTags = exports.responseHooks = exports.requestHooks = void 0;
 exports.requestHooks = [
     (context) => __awaiter(void 0, void 0, void 0, function* () {
         const response = yield fetch('https://jsonplaceholder.typicode.com/todos/1');
-        const json = yield response.json();
-        console.log(json);
+        const data = yield response.json();
+        context.store.setItem('itemId', JSON.stringify(data));
     })
 ];
 exports.responseHooks = [
-    (context) => {
-        console.log('hello world');
-    }
+    (context) => __awaiter(void 0, void 0, void 0, function* () {
+        const store = yield context.store.getItem('myItem');
+        console.log('response', JSON.parse(store));
+    })
 ];
+exports.templateTags = [{
+        name: 'getKeyInStore',
+        displayName: 'Store Value',
+        args: [{ type: 'string', defaultValue: 'itemId' }],
+        run(context, theKey) {
+            return __awaiter(this, void 0, void 0, function* () {
+                const response = yield context.store.getItem(theKey);
+                const data = JSON.parse(response);
+                console.log('Tag Data', data);
+                return data.id;
+            });
+        }
+    }];

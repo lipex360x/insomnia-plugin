@@ -1,37 +1,29 @@
-// import { RequestHook, StoreContext } from "./interfaces";
-
-// module.exports.requestHooks = Array<(context: RequestHook) => void>;
-
 export const requestHooks = [
   async (context: any) => {
     const response = await fetch('https://jsonplaceholder.typicode.com/todos/1');
-    const json = await response.json();
-    console.log(json);
+    const data = await response.json();
+    context.store.setItem('itemId', JSON.stringify(data))
   }
 ];
 
 export const responseHooks = [
-  (context: any) => {
-    console.log('hello world')
-    // context.setItem('hello', 'world')
+  async (context: any) => {
+    const store = await context.store.getItem('myItem')
+
+    console.log('response', JSON.parse(store))
   }
 ]
 
-// module.exports.responseHooks = [
-//   context => {
-//       const resp = bufferToJsonObj(context.response.getBody())
-//       const postId = resp[0].id
-//       context.store.setItem("post_id", postId)
-//   }
-// ];
+export const templateTags = [{
+  name: 'getKeyInStore',
+  displayName: 'Store Value',
+  args: [{ type: 'string', defaultValue: 'itemId' }],
 
-// const requestHooks = (context: RequestHook[]): void => {
-//   context[0].
-// }
-
-// module.exports.requestHooks = [
-//   context => {
-//   fetch('https://jsonplaceholder.typicode.com/todos/1')
-//     .then(response => response.json())
-//     .then(json => console.log(json))
-//   }
+  async run (context: any, theKey: string) {
+      const response = await context.store.getItem(theKey)
+      const data = JSON.parse(response)
+      
+      console.log('Tag Data', data)
+      return data.id
+  }
+}];
