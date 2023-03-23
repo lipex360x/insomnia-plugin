@@ -1,0 +1,19 @@
+{
+  "name": "insomnia-plugin-base-plugin",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "build": "tsup src --format cjs",
+    "hee": "tsc --module CommonJS --outDir ."
+  },
+  "insomnia": {
+    "name": "base-plugin",
+    "description": ""
+  },
+  "main": "./dist/main.js",
+  "devDependencies": {
+    "@types/node": "^18.15.5",
+    "tsup": "^6.7.0",
+    "typescript": "^5.0.2"
+  }
+}
