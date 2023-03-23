@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "build": "tsc --module CommonJS --outDir ."
+    "build": "tsc --module CommonJS --outDir .",
+    "build2": "tsup src --format cjs"
   },
   "insomnia": {
     "name": "base-plugin",
